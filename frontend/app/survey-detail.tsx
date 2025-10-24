@@ -157,6 +157,9 @@ export default function SurveyDetail() {
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Property Information</Text>
           <DetailRow icon="location" label="Address" value={survey.address} multiline />
+          {survey.ward && (
+            <DetailRow icon="business" label="Ward" value={survey.ward} />
+          )}
           {survey.gps && (
             <DetailRow
               icon="navigate"
