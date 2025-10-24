@@ -1,13 +1,44 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useEffect } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
+import { useAuth } from '../context/AuthContext';
 
 export default function Home() {
   const router = useRouter();
+  const { user, loading, logout, isAuthenticated } = useAuth();
+
+  useEffect(() => {
+    if (!loading && !isAuthenticated) {
+      router.replace('/login');
+    }
+  }, [loading, isAuthenticated]);
+
+  if (loading) {
+    return (
+      <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#4CAF50" />
+        <Text style={styles.loadingText}>Loading...</Text>
+      </View>
+    );
+  }
+
+  if (!isAuthenticated) {
+    return null;
+  }
 
   return (
     <View style={styles.container}>
+      <View style={styles.topBar}>
+        <View style={styles.userInfo}>
+          <Ionicons name="person-circle" size={32} color="#4CAF50" />
+          <Text style={styles.userName}>{user?.name || 'User'}</Text>
+        </View>
+        <TouchableOpacity onPress={logout} style={styles.logoutButton}>
+          <Ionicons name="log-out-outline" size={24} color="#f44336" />
+        </TouchableOpacity>
+      </View>
+
       <View style={styles.header}>
         <Ionicons name="document-text" size={64} color="#4CAF50" />
         <Text style={styles.title}>Property Survey</Text>
