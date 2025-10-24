@@ -14,9 +14,24 @@ import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import * as Location from 'expo-location';
 import { Camera } from 'expo-camera';
+import { Picker } from '@react-native-picker/picker';
 import { saveSurvey } from '../utils/storage';
 import { encrypt } from '../utils/encryption';
 import { calculateManualArea, estimateAreaFromImage, anomalyCheck } from '../utils/areaEstimator';
+
+// List of wards (can be expanded as needed)
+const WARDS = [
+  'Ward 1',
+  'Ward 2',
+  'Ward 3',
+  'Ward 4',
+  'Ward 5',
+  'Ward 6',
+  'Ward 7',
+  'Ward 8',
+  'Ward 9',
+  'Ward 10',
+];
 
 export default function NewSurvey() {
   const router = useRouter();
@@ -29,6 +44,7 @@ export default function NewSurvey() {
   const [email, setEmail] = useState('');
   const [aadhar, setAadhar] = useState('');
   const [address, setAddress] = useState('');
+  const [ward, setWard] = useState('Ward 1');
   
   // Area estimation
   const [areaMethod, setAreaMethod] = useState('manual'); // 'manual' or 'photo'
