@@ -176,6 +176,7 @@ export default function NewSurvey() {
         email,
         aadhar: encryptedAadhar,
         address,
+        ward,
         gps,
         area,
         areaMethod,
