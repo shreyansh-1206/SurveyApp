@@ -1,50 +1,120 @@
-# Welcome to your Expo app 👋
+# Property Survey App - Minimal Prototype
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+**Note:** This is a minimal, credit-friendly prototype. Replace the stubs (`estimateAreaFromImage`, `uploadFile`, `callOCR`) with your AI/cloud endpoints to enable full features.
 
-## Get started
-
-1. Install dependencies
-
-   ```bash
-   npm install
-   ```
-
-2. Start the app
-
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
+## Quick Start
 
 ```bash
-npm run reset-project
+# Install dependencies
+cd frontend
+npm install
+
+# Start the app
+npm start
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## Features
 
-## Learn more
+### Core Functionality (Implemented)
+- **New Survey**: Create property surveys with owner information
+- **GPS Capture**: One-tap GPS coordinate capture using device location
+- **Camera Integration**: Capture property photos and documents
+- **Area Estimation**: 
+  - Manual entry (length × breadth)
+  - Photo-based estimation with reference object (stubbed CV)
+- **Property Tax Calculation**: Automatic calculation based on area
+- **Local Storage**: Save surveys locally using AsyncStorage
+- **Data Encryption**: Aadhar numbers encrypted using AES (crypto-js)
+- **My Surveys**: List, view, edit, and delete surveys
+- **Settings**: Configure tax rate and API endpoints
 
-To learn more about developing your project with Expo, look at the following resources:
+### Stubbed Features (Ready for Production Integration)
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+#### 1. Area Estimation from Image
+**Current:** Simple proportional calculation using reference object
+**File:** `frontend/utils/areaEstimator.js`
+**Upgrade to:** Computer Vision API (Azure CV, Google Cloud Vision, custom model)
 
-## Join the community
+#### 2. Cloud File Upload
+**Current:** Returns mock URL
+**File:** `frontend/utils/apiStubs.js`
+**Upgrade to:** S3, Google Cloud Storage, Azure Blob
 
-Join our community of developers creating universal apps.
+#### 3. OCR Service
+**Current:** Returns mock data
+**File:** `frontend/utils/apiStubs.js`
+**Upgrade to:** Azure OCR, Google Cloud Vision, Tesseract
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+#### 4. PDF Report Generation
+**Current:** Returns JSON stub
+**File:** `frontend/utils/apiStubs.js`
+**Upgrade to:** `expo-print` or server-side PDF generation
+
+## Configuration
+
+### Environment Variables
+Copy `frontend/.env.example` to `frontend/.env` and configure:
+
+```env
+# Backend API
+EXPO_PUBLIC_BACKEND_URL=http://localhost:8001
+
+# Cloud Services (optional)
+EXPO_PUBLIC_API_UPLOAD_URL=https://your-cloud-storage.com/upload
+EXPO_PUBLIC_API_OCR_URL=https://your-ocr-service.com/extract
+
+# Security
+EXPO_PUBLIC_ENCRYPTION_KEY=your-32-char-key-here
+
+# Tax Configuration
+EXPO_PUBLIC_RATE_PER_M2=10
+```
+
+## Project Structure
+
+```
+frontend/
+├── app/                      # Expo Router screens
+│   ├── index.tsx            # Home/Landing screen
+│   ├── new-survey.tsx       # Create new survey
+│   ├── my-surveys.tsx       # List all surveys
+│   ├── survey-detail.tsx    # View survey details
+│   ├── settings.tsx         # App settings
+│   └── camera.tsx           # Camera capture
+├── utils/
+│   ├── storage.js           # AsyncStorage wrapper
+│   ├── areaEstimator.js     # Area calculation (manual + photo stub)
+│   ├── encryption.js        # AES encryption/decryption
+│   └── apiStubs.js          # Cloud upload, OCR, report stubs
+└── package.json
+```
+
+## Permissions Required
+
+The app requests:
+- **Camera**: For capturing property photos and documents
+- **Location**: For GPS coordinate capture
+
+## Upgrading to Production
+
+Replace stub functions in `frontend/utils/` with production APIs:
+1. **Area Estimation**: Integrate CV model (Azure/Google/Custom)
+2. **Cloud Storage**: AWS S3, GCS, or Azure Blob
+3. **OCR**: Azure OCR or Google Cloud Vision
+4. **Reports**: Implement PDF generation with expo-print
+
+## Testing
+
+### Manual Testing
+1. Create a new survey
+2. Fill owner information
+3. Capture GPS coordinates
+4. Try both area estimation methods
+5. Save and view in My Surveys
+6. Test settings configuration
+
+---
+
+**Version:** 1.0.0 (Prototype)  
+**Platform:** Cross-platform (iOS, Android, Web)  
+**Framework:** React Native + Expo
