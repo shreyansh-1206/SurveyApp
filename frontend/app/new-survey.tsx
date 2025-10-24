@@ -274,6 +274,19 @@ export default function NewSurvey() {
             numberOfLines={3}
             placeholderTextColor="#999"
           />
+          
+          <Text style={styles.label}>Ward *</Text>
+          <View style={styles.pickerContainer}>
+            <Picker
+              selectedValue={ward}
+              onValueChange={(itemValue) => setWard(itemValue)}
+              style={styles.picker}
+            >
+              {WARDS.map((w) => (
+                <Picker.Item key={w} label={w} value={w} />
+              ))}
+            </Picker>
+          </View>
         </View>
 
         {/* GPS Location */}
