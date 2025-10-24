@@ -606,6 +606,17 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
   },
+  pickerContainer: {
+    borderWidth: 1,
+    borderColor: '#ddd',
+    borderRadius: 8,
+    backgroundColor: '#fafafa',
+    overflow: 'hidden',
+  },
+  picker: {
+    height: 50,
+    color: '#333',
+  },
   bottomPadding: {
     height: 32,
   },
